@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from Calculadora import Somar, Subtrair, Dividir, Multiplicar
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -15,21 +16,23 @@ def calcular():
     v2=request.form['v2']
     operador=request.form['operador']
 
-    if (operador == "soma"):
-        resultado = int(v1) + int(v2)
+    if (operador == "somar"):
+        resultado = Somar.calculo(int(v1), int(v2))
 
     elif(operador == "subtracao"):
-        resultado = int(v1) - int(v2)
+        resultado = Subtrair.calculo(int(v1), int(v2))
 
-    elif(operador == "divisao"):
-        if (v2 == 0):
+    elif(operador == "dividir"):
+        if (int(v2) == 0):
             return ("Não e possivel dividir numeros por 0!!!")
         else:
-            resultado = int(v1) / int(v2)
-    elif (operador == "multiplicacao"):
-        resultado = int(v1) * int(v2)
+            resultado = Dividir.calculo(int(v1), int(v2))
+
+    elif (operador == "multiplicar"):
+        resultado = Multiplicar.calculo(int(v1), int(v2))
+
     else:
-        return ("Não foi passado os numeros!!!")
+        return ("Você se esqueceu de passar algum numero ou escreveu a opção de calculo incorreta !!!")
 
     return str(resultado)
 
